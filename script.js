@@ -1,15 +1,19 @@
-var delayInMilliseconds = 2000; //2 second
 var sliderInternal;
-
 let cardItems = document.querySelectorAll('.card-slider-item');
-let activeItem;
+var activeItem;
+var settings = {
+    delay: 2000, // slider speed (ms)
+    auto: true // auto switch (boolean)
+};
 
 document.querySelector('.card-slider-item').classList.add('active');
 
 function sliderTimer() {
-    sliderInternal = setInterval(function() {
-        sliderAuto();
-    }, delayInMilliseconds);
+    if (settings.auto) {
+        sliderInternal = setInterval(function() {
+            sliderAuto();
+        }, settings.delay);
+    }
 }
 
 function sliderAuto() {
@@ -55,7 +59,9 @@ function sliderRight(e) {
 function sliderNav(e) {
     if (e.target.className === 'btn btn-success') {
         if (e.type == 'mouseover') {
-            clearInterval(sliderInternal);
+            if (settings.auto) {
+                clearInterval(sliderInternal);
+            }
         }
 
         if (e.type == 'mouseout') {
@@ -74,8 +80,12 @@ function sliderNav(e) {
     }
 }
 
-sliderTimer();
+function init() {
+    sliderTimer();
 
-document.querySelector('.card-footer').addEventListener('mouseover', sliderNav);
-document.querySelector('.card-footer').addEventListener('mouseout', sliderNav);
-document.querySelector('.card-footer').addEventListener('click', sliderNav);
+    document.querySelector('.card-footer').addEventListener('mouseover', sliderNav);
+    document.querySelector('.card-footer').addEventListener('mouseout', sliderNav);
+    document.querySelector('.card-footer').addEventListener('click', sliderNav);
+}
+
+init();
