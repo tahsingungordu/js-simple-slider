@@ -4,6 +4,8 @@ var sliderInternal;
 let cardItems = document.querySelectorAll('.card-slider-item');
 let activeItem;
 
+document.querySelector('.card-slider-item').classList.add('active');
+
 function sliderTimer() {
     sliderInternal = setInterval(function() {
         sliderAuto();
